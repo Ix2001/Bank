@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Loan {
+public class Loan extends Bank {
     private Date application = new Date();
     private double interest;
     private int month;

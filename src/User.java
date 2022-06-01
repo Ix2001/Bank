@@ -2,13 +2,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
-public class User {
+public class User extends Bank {
+    Scanner console = new Scanner(System.in);
     private String name;
     private String surname;
     private Date dob = new Date();
-    private boolean man = true;
-    private boolean female = false;
+    private boolean sex;
     private String email;
     private String pwd;
 
@@ -24,13 +25,7 @@ public class User {
         this.dob = dob;
     }
 
-    public void setMan(boolean man) {
-        this.man = man;
-    }
 
-    public void setFemale(boolean female) {
-        this.female = female;
-    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -52,13 +47,6 @@ public class User {
         return dob;
     }
 
-    public boolean isMan() {
-        return man;
-    }
-
-    public boolean isFemale() {
-        return female;
-    }
 
     public String getEmail() {
         return email;
@@ -68,14 +56,53 @@ public class User {
         return pwd;
     }
 
-    public String toString() {
-        System.out.println("First name:" + name);
-        System.out.println("Last name: " + surname);
-        System.out.println("Birth date: " + dob);
-        return toString();
+    public boolean isSex() {
+        return sex;
     }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
+
+    public List<Loan> getCredits() {
+        return credits;
+    }
+
+    public void setCredits(List<Loan> credits) {
+        this.credits = credits;
+    }
+
+    public List<DebitCard> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<DebitCard> cards) {
+        this.cards = cards;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", dob=" + dob +
+
+                ", email='" + email + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", credits=" + credits +
+                ", cards=" + cards +
+                '}';
+    }
+
     List<Loan> credits = new ArrayList<>();
     List<DebitCard> cards = new ArrayList<>();
-
+    public void checkEmail(){
+        System.out.println("Put your email and password");
+        String eml = console.nextLine();
+        String password = console.nextLine();
+        if(eml.equals(email) && password.equals(pwd)){
+            System.out.println("Wrong password or account don't exist");
+        }
+    }
 
 }

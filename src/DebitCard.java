@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class DebitCard {
+public class DebitCard extends Bank {
     private double avialiableBalance;
     private String CardNumber;
     private Date expireDate = new Date();
