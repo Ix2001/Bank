@@ -4,13 +4,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class Cashier {
-    Bank bank1 = new Bank();
-
+    private Bank bankCashier;
+    Cashier cashier = new Cashier(null);
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 
-    public Cashier(Bank bank1) {
-        this.bank1 = bank1;
+    public Cashier(Bank bankCashier) {
+        this.bankCashier = bankCashier;
     }
+
     public void showStartMenu() throws IOException {
         System.out.println("Select one: ");
         System.out.println("1. Login");
@@ -18,9 +19,9 @@ public class Cashier {
         System.out.println("0. Exit");
         int choice = console.read();
         if(choice == 1){
-
+            cashier.showLogin();
         }else if(choice == 2){
-
+            cashier.showRegister();
         }else if(choice == 0){
             System.exit(0);
         }
