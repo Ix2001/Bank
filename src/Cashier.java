@@ -4,12 +4,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class Cashier {
-    private Bank bankCashier;
+    public Bank bank;
     Cashier cashier = new Cashier(null);
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 
-    public Cashier(Bank bankCashier) {
-        this.bankCashier = bankCashier;
+    public Cashier(Bank bank) {
+        this.bank = bank;
     }
 
     public void showStartMenu() throws IOException {
@@ -26,10 +26,39 @@ public class Cashier {
             System.exit(0);
         }
     }
-    private void showLogin(){
-
+    private void showLogin() throws IOException {
+        System.out.println("Please tell us your email");
+        String email = console.readLine();
+        System.out.println("Please tell us your password");
+        String pwd = console.readLine();
+        boolean isLogedIn = bank.doLogin(email, pwd);
+        if(isLogedIn == false){
+            System.out.println("Incorrect email or password");
+        }else {
+            showCashierMenu();
+        }
     }
-    private void showRegister(){
+
+
+    private void showRegister() throws IOException {
+        System.out.println("Please tell us your name");
+        console.readLine();
+        System.out.println("Please tell us your last name");
+        console.readLine();
+        System.out.println("Please tell us your date of birth");
+        console.readLine();
+        System.out.println("Please choose your gender");
+        System.out.println("1. Male");
+        System.out.println("2. Female");
+        int choice2 = console.read();
+        if(choice2 == 1){
+
+        }
+        else if(choice2 ==2 ){
+
+        }else {
+            System.out.println("Wrong number");
+        }
     }
     public void showCashierMenu(){
         System.out.println("1. Show my info");
@@ -37,4 +66,6 @@ public class Cashier {
         System.out.println("3. Add debit card");
         System.out.println("0.  Exit");
     }
+
+
 }

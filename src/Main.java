@@ -1,7 +1,8 @@
 import java.io.IOException;
 
 public class Main {
-    Bank bank = new Bank();
-    bank.start();
 
+    public static void main(String[] args) {
+        Bank bank1 = new Bank();
+    }
 }

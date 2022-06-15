@@ -1,15 +1,16 @@
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class User extends Bank {
+public class User extends Bank implements Serializable {
     Scanner console = new Scanner(System.in);
     private String name;
     private String surname;
     private Date dob = new Date();
-    private boolean sex;
+    private boolean gender;
     private String email;
     private String pwd;
 
@@ -57,11 +58,11 @@ public class User extends Bank {
     }
 
     public boolean isSex() {
-        return sex;
+        return gender;
     }
 
     public void setSex(boolean sex) {
-        this.sex = sex;
+        this.gender = sex;
     }
 
     public List<Loan> getCredits() {
