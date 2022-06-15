@@ -5,7 +5,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class User extends Bank implements Serializable {
+public class User implements Serializable {
+    public User(String name, String surname, Date dob, boolean gender, String email, String pwd) {
+        this.name = name;
+        this.surname = surname;
+        this.dob = dob;
+        this.gender = gender;
+        this.email = email;
+        this.pwd = pwd;
+    }
+
     Scanner console = new Scanner(System.in);
     private String name;
     private String surname;
@@ -97,13 +106,13 @@ public class User extends Bank implements Serializable {
 
     List<Loan> credits = new ArrayList<>();
     List<DebitCard> cards = new ArrayList<>();
-    public void checkEmail(){
-        System.out.println("Put your email and password");
-        String eml = console.nextLine();
-        String password = console.nextLine();
-        if(eml.equals(email) && password.equals(pwd)){
-            System.out.println("Wrong password or account don't exist");
-        }
-    }
+   // public void checkEmail(){
+   //     System.out.println("Put your email and password");
+   //     String eml = console.nextLine();
+    //    String password = console.nextLine();
+    //    if(eml.equals(email) && password.equals(pwd)){
+    //        System.out.println("Wrong password or account don't exist");
+   //     }
+   // }
 
 }
