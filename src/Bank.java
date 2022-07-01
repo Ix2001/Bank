@@ -6,22 +6,30 @@ public class Bank {
     List<User> users = new ArrayList<>();
     List<Loan> loans = new ArrayList<>();
     List<DebitCard> debitCards = new ArrayList<>();
+    User logedInUser = null;
     Cashier cs = new Cashier(this);
     public void start(){
         deserializeUsers();
+        cs.showStartMenu();
     }
 
     public boolean doLogin(String email, String password){
-        for(User i : users){
-            if()
+        for(User user: users){
+            if(user.getEmail().equals(email) && user.getPwd().equals(password)){
+                logedInUser = user;
+                return true;
+
+            }
+
         }
+        return false;
     }
     public void writeCardAdding(DebitCard debitCard){
-        debitCards.add(debitCard);
+        logedInUser.getCards().add(debitCard);
         serializeUsers(users);
     }
     public void writeGetLoan(Loan loan){
-        loans.add(loan);
+        logedInUser.getCredits().add(loan);
         serializeUsers(users);
     }
 

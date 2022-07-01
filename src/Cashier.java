@@ -5,34 +5,47 @@ import java.io.Reader;
 
 public class Cashier {
     public Bank bank;
-    Cashier cashier = new Cashier(null);
+
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 
     public Cashier(Bank bank) {
         this.bank = bank;
     }
 
-    public void showStartMenu() throws IOException {
+    public void showStartMenu() {
         System.out.println("Select one: ");
         System.out.println("1. Login");
         System.out.println("2. Register");
         System.out.println("0. Exit");
-        int choice = console.read();
+        int choice = 0;
+        try {
+            choice = console.read();
+        } catch (IOException e) {
+            System.out.println("Cannot read the data");;
+        }
         if(choice == 1){
-            cashier.showLogin();
+            showLogin();
         }else if(choice == 2){
-            cashier.showRegister();
+            showRegister();
         }else if(choice == 0){
             System.exit(0);
         }
     }
-    private void showLogin() throws IOException {
+    private void showLogin() {
         System.out.println("Please tell us your email");
-        String email = console.readLine();
-        System.out.println("Please tell us your password");
-        String pwd = console.readLine();
+        String email = null;
+        String pwd = null;
+        try {
+            email = console.readLine();
+            System.out.println("Please tell us your password");
+            pwd = console.readLine();
+        } catch (IOException e) {
+
+        }
+
+
         boolean isLogedIn = bank.doLogin(email, pwd);
-        if(isLogedIn == false){
+        if(!isLogedIn){
             System.out.println("Incorrect email or password");
         }else {
             showCashierMenu();
@@ -40,21 +53,36 @@ public class Cashier {
     }
 
 
-    private void showRegister() throws IOException {
+    private void showRegister() {
         System.out.println("Please tell us your email");
-        String email = console.readLine();
-        System.out.println("Please tell us your password");
-        String pwd = console.readLine();
-        System.out.println("Please tell us your name");
-        String name = console.readLine();
-        System.out.println("Please tell us your last name");
-        String surname = console.readLine();
-        System.out.println("Please tell us your date of birth");
-        String date =  console.readLine();
+        String email = null;
+        String pwd = null;
+        String name = null;
+        String surname = null;
+        String date = null;
+        try {
+            email = console.readLine();
+            System.out.println("Please tell us your password");
+            pwd = console.readLine();
+            System.out.println("Please tell us your name");
+            name = console.readLine();
+            System.out.println("Please tell us your last name");
+            surname = console.readLine();
+            System.out.println("Please tell us your date of birth");
+            date =  console.readLine();
+        } catch (IOException e) {
+            System.out.println("Cannot read the data");;
+        }
+
         System.out.println("Please choose your gender");
         System.out.println("1. Male");
         System.out.println("2. Female");
-        int choice2 = console.read();
+        int choice2 = 0;
+        try {
+            choice2 = console.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         boolean gender = true;
         if(choice2 == 1){
             gender = true;
@@ -68,17 +96,23 @@ public class Cashier {
         bank.doRegister(user);
 
     }
-    public void showCashierMenu() throws IOException {
+    public void showCashierMenu() {
         System.out.println("1. Show my info");
         System.out.println("2. Add loan");
         System.out.println("3. Add debit card");
         System.out.println("0.  Exit");
-        int choice = console.read();
-        if(choice == 2){
-            this.readGetLoan();
-        }else if(choice == 3){
-            this.readCardAdding();
+        int choice = 0;
+        try {
+            choice = console.read();
+            if(choice == 2){
+                this.readGetLoan();
+            }else if(choice == 3){
+                this.readCardAdding();
+            }
+        } catch (IOException e) {
+            System.out.println("Cannot read the data");;
         }
+
 
 
     }
