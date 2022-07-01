@@ -4,13 +4,27 @@ import java.util.List;
 
 public class Bank {
     List<User> users = new ArrayList<>();
+    List<Loan> loans = new ArrayList<>();
+    List<DebitCard> debitCards = new ArrayList<>();
     Cashier cs = new Cashier(this);
     public void start(){
         deserializeUsers();
     }
+
     public boolean doLogin(String email, String password){
-        return true;
+        for(User i : users){
+            if()
+        }
     }
+    public void writeCardAdding(DebitCard debitCard){
+        debitCards.add(debitCard);
+        serializeUsers(users);
+    }
+    public void writeGetLoan(Loan loan){
+        loans.add(loan);
+        serializeUsers(users);
+    }
+
     public void doRegister(User user){
         users.add(user);
         serializeUsers(users);

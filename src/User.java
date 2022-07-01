@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class User implements Serializable {
-    public User(String name, String surname, Date dob, boolean gender, String email, String pwd) {
+    public User(String name, String surname, String dob, boolean gender, String email, String pwd) {
         this.name = name;
         this.surname = surname;
         this.dob = dob;
@@ -18,10 +18,12 @@ public class User implements Serializable {
     Scanner console = new Scanner(System.in);
     private String name;
     private String surname;
-    private Date dob = new Date();
+    private String dob;
     private boolean gender;
     private String email;
     private String pwd;
+    List<Loan> credits = new ArrayList<>();
+    List<DebitCard> cards = new ArrayList<>();
 
     public void setName(String name) {
         this.name = name;
@@ -31,7 +33,7 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -53,7 +55,7 @@ public class User implements Serializable {
         return surname;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
@@ -104,8 +106,7 @@ public class User implements Serializable {
                 '}';
     }
 
-    List<Loan> credits = new ArrayList<>();
-    List<DebitCard> cards = new ArrayList<>();
+
    // public void checkEmail(){
    //     System.out.println("Put your email and password");
    //     String eml = console.nextLine();

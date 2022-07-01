@@ -68,12 +68,45 @@ public class Cashier {
         bank.doRegister(user);
 
     }
-    public void showCashierMenu(){
+    public void showCashierMenu() throws IOException {
         System.out.println("1. Show my info");
         System.out.println("2. Add loan");
         System.out.println("3. Add debit card");
         System.out.println("0.  Exit");
+        int choice = console.read();
+        if(choice == 2){
+            this.readGetLoan();
+        }else if(choice == 3){
+            this.readCardAdding();
+        }
+
+
     }
+    public void readCardAdding() throws IOException {
+        System.out.println("Please generate card number");
+        String cardNumber = console.readLine();
+        System.out.println("Please tell us avialiable balance of your card");
+        double avialiableBalance = console.read();
+        System.out.println("Please tell us expire date of your card");
+        String expireDate = console.readLine();
+        System.out.println("Write your cvv/cvc");
+        int cvv = console.read();
+        DebitCard debitCard = new DebitCard(avialiableBalance, cardNumber, expireDate, cvv);
+        bank.writeCardAdding(debitCard);
+    }
+    public void readGetLoan() throws IOException {
+        System.out.println("Please tell us application date");
+        String application = console.readLine();
+        System.out.println("Please tell us interest rate");
+        double interest = console.read();
+        System.out.println("Please tell us desire loan repayment period");
+        int month = console.read();
+        System.out.println("Please tell us desire monthly Payments");
+        double monthlyPayments = console.read();
+        Loan loan = new Loan(application,interest,month,monthlyPayments);
+        bank.writeGetLoan(loan);
+    }
+
 
 
 }

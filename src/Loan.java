@@ -1,12 +1,20 @@
 import java.util.Date;
 
 public class Loan extends Bank {
-    private Date application = new Date();
+    private String application;
     private double interest;
     private int month;
     private double monthlyPayments;
 
-    public Date getApplication() {
+    public Loan(String application, double interest, int month, double monthlyPayments) {
+        this.application = application;
+        this.interest = interest;
+        this.month = month;
+        this.monthlyPayments = monthlyPayments;
+    }
+
+
+    public String getApplication() {
         return application;
     }
 
@@ -22,7 +30,7 @@ public class Loan extends Bank {
         return monthlyPayments;
     }
 
-    public void setApplication(Date application) {
+    public void setApplication(String application) {
         this.application = application;
     }
 
