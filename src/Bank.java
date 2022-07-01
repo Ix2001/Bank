@@ -4,8 +4,7 @@ import java.util.List;
 
 public class Bank {
     List<User> users = new ArrayList<>();
-    List<Loan> loans = new ArrayList<>();
-    List<DebitCard> debitCards = new ArrayList<>();
+
     User logedInUser = null;
     Cashier cs = new Cashier(this);
     public void start(){
@@ -29,7 +28,7 @@ public class Bank {
         serializeUsers(users);
     }
     public void writeGetLoan(Loan loan){
-        logedInUser.getCredits().add(loan);
+        logedInUser.getLoans().add(loan);
         serializeUsers(users);
     }
 

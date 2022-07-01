@@ -22,7 +22,7 @@ public class User implements Serializable {
     private boolean gender;
     private String email;
     private String pwd;
-    List<Loan> credits = new ArrayList<>();
+    List<Loan> loan = new ArrayList<>();
     List<DebitCard> cards = new ArrayList<>();
 
     public void setName(String name) {
@@ -76,12 +76,12 @@ public class User implements Serializable {
         this.gender = sex;
     }
 
-    public List<Loan> getCredits() {
-        return credits;
+    public List<Loan> getLoans() {
+        return loan;
     }
 
-    public void setCredits(List<Loan> credits) {
-        this.credits = credits;
+    public void setLoans(List<Loan> credits) {
+        this.loan = credits;
     }
 
     public List<DebitCard> getCards() {
@@ -101,7 +101,7 @@ public class User implements Serializable {
 
                 ", email='" + email + '\'' +
                 ", pwd='" + pwd + '\'' +
-                ", credits=" + credits +
+                ", credits=" + loan +
                 ", cards=" + cards +
                 '}';
     }
