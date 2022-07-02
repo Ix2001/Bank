@@ -13,6 +13,7 @@ public class Cashier {
     }
 
     public void showStartMenu() {
+
         System.out.println("Select one: ");
         System.out.println("1. Login");
         System.out.println("2. Register");
@@ -117,14 +118,22 @@ public class Cashier {
 
     }
     public void readCardAdding() throws IOException {
-        System.out.println("Please generate card number");
-        String cardNumber = console.readLine();
+        long a = 1000000000000000L; // Начальное значение диапазона - "от"
+        long b = 9999999999999999L; // Конечное значение диапазона - "до"
+
+        long cardNumber = a + (long) (Math.random() * b);
+        //System.out.println("Please generate card number");
+        //long cardNumber = console.read();
         System.out.println("Please tell us avialiable balance of your card");
         double avialiableBalance = console.read();
         System.out.println("Please tell us expire date of your card");
         String expireDate = console.readLine();
-        System.out.println("Write your cvv/cvc");
-        int cvv = console.read();
+        //System.out.println("Write your cvv/cvc");
+        //int cvv = console.read();
+        int a1 = 000; // Начальное значение диапазона - "от"
+        int b1 = 999; // Конечное значение диапазона - "до"
+
+        int cvv = a1 + (int) (Math.random() * b1);
         DebitCard debitCard = new DebitCard(avialiableBalance, cardNumber, expireDate, cvv);
         bank.writeCardAdding(debitCard);
     }
@@ -140,7 +149,4 @@ public class Cashier {
         Loan loan = new Loan(application,interest,month,monthlyPayments);
         bank.writeGetLoan(loan);
     }
-
-
-
 }

@@ -76,7 +76,5 @@ public class Bank {
         } catch (ClassNotFoundException e) {
             System.out.println("Error");
         }
-
-
     }
 }
