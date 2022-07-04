@@ -1,9 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Cashier {
+
     public Bank bank;
 
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
@@ -22,12 +25,16 @@ public class Cashier {
         try {
             choice = console.read();
         } catch (IOException e) {
-            System.out.println("Cannot read the data");;
+            System.out.println("Cannot read the data");
         }
         if(choice == 1){
             showLogin();
         }else if(choice == 2){
-            showRegister();
+            try {
+                showRegister();
+            } catch (ParseException e) {
+                System.out.println("Error");
+            }
         }else if(choice == 0){
             System.exit(0);
         }
@@ -41,7 +48,7 @@ public class Cashier {
             System.out.println("Please tell us your password");
             pwd = console.readLine();
         } catch (IOException e) {
-
+            System.out.println("Cannot show login");
         }
 
 
@@ -54,14 +61,15 @@ public class Cashier {
     }
 
 
-    private void showRegister() {
-        System.out.println("Please tell us your email");
+    private void showRegister() throws ParseException {
         String email = null;
         String pwd = null;
         String name = null;
         String surname = null;
         String date = null;
+
         try {
+            System.out.println("Please tell us your email");
             email = console.readLine();
             System.out.println("Please tell us your password");
             pwd = console.readLine();
@@ -69,10 +77,11 @@ public class Cashier {
             name = console.readLine();
             System.out.println("Please tell us your last name");
             surname = console.readLine();
-            System.out.println("Please tell us your date of birth");
+            System.out.println("Please tell us your date of birth by dd/MM/yyyy format");
             date =  console.readLine();
+
         } catch (IOException e) {
-            System.out.println("Cannot read the data");;
+            System.out.println("Cannot read the data");
         }
 
         System.out.println("Please choose your gender");
@@ -93,7 +102,8 @@ public class Cashier {
         }else {
             System.out.println("Wrong number");
         }
-        User user = new User(name, surname, date , gender, email, pwd);
+        Date dob = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        User user = new User(name, surname, dob , gender, email, pwd);
         bank.doRegister(user);
 
     }
@@ -111,42 +121,80 @@ public class Cashier {
                 this.readCardAdding();
             }
         } catch (IOException e) {
-            System.out.println("Cannot read the data");;
+            System.out.println("Cannot read the data");
         }
 
 
 
     }
-    public void readCardAdding() throws IOException {
+    public void readCardAdding() {
+        String cardNumber = generateCardNumber();
+        double avialiableBalance = 0;
+        String expireDate = null;
+        //int cvv= 0;
+        try {
+            System.out.println("Please tell us avialiable balance of your card");
+            avialiableBalance = console.read();
+            System.out.println("Please tell us expire date of your card in format MM/YYYY");
+            expireDate = console.readLine();
+            //System.out.println("Write your cvv/cvc");
+            //cvv = console.read();
+        } catch (IOException e) {
+            System.out.println("Cannot read the data");
+        }
+
+
+        Date expDate = null;
+        try {
+            expDate = new SimpleDateFormat("MM/yyyy").parse(expireDate);
+        } catch (ParseException e) {
+            System.out.println("Cannot convert string to date");
+        }
+        int cvv = generateCVV();
+        DebitCard debitCard = new DebitCard(avialiableBalance, cardNumber, expDate, cvv);
+        bank.writeCardAdding(debitCard);
+    }
+    public void readGetLoan(){
+        System.out.println("Please tell us application date");
+        String application = null;
+        double interest = 0;
+        int month = 0;
+        double monthlyPayments = 0;
+        try {
+            application = console.readLine();
+            System.out.println("Please tell us interest rate");
+            interest = console.read();
+            System.out.println("Please tell us desire loan repayment period");
+            month = console.read();
+            monthlyPayments = console.read();
+            System.out.println("Please tell us desire monthly Payments");
+            monthlyPayments = console.read();
+        } catch (IOException e) {
+            System.out.println("Cannot read the data");;
+        }
+
+        Date applicationDate = null;
+        try {
+            applicationDate = new SimpleDateFormat("dd/MM/yyyy").parse(application);
+        } catch (ParseException e) {
+            System.out.println("Cannot read the data");;
+        }
+        Loan loan = new Loan(applicationDate,interest,month,monthlyPayments);
+        bank.writeGetLoan(loan);
+    }
+    public String generateCardNumber(){
         long a = 1000000000000000L; // Начальное значение диапазона - "от"
         long b = 9999999999999999L; // Конечное значение диапазона - "до"
 
-        long cardNumber = a + (long) (Math.random() * b);
-        //System.out.println("Please generate card number");
-        //long cardNumber = console.read();
-        System.out.println("Please tell us avialiable balance of your card");
-        double avialiableBalance = console.read();
-        System.out.println("Please tell us expire date of your card");
-        String expireDate = console.readLine();
-        //System.out.println("Write your cvv/cvc");
-        //int cvv = console.read();
-        int a1 = 000; // Начальное значение диапазона - "от"
-        int b1 = 999; // Конечное значение диапазона - "до"
-
-        int cvv = a1 + (int) (Math.random() * b1);
-        DebitCard debitCard = new DebitCard(avialiableBalance, cardNumber, expireDate, cvv);
-        bank.writeCardAdding(debitCard);
+        long cardNumber0 = a + (long) (Math.random() * b);
+        String cardNumber = Long.toString(cardNumber0);
+        return cardNumber;
     }
-    public void readGetLoan() throws IOException {
-        System.out.println("Please tell us application date");
-        String application = console.readLine();
-        System.out.println("Please tell us interest rate");
-        double interest = console.read();
-        System.out.println("Please tell us desire loan repayment period");
-        int month = console.read();
-        System.out.println("Please tell us desire monthly Payments");
-        double monthlyPayments = console.read();
-        Loan loan = new Loan(application,interest,month,monthlyPayments);
-        bank.writeGetLoan(loan);
+    public int generateCVV(){
+        int a = 111; // Начальное значение диапазона - "от"
+        int b = 999; // Конечное значение диапазона - "до"
+
+        int cvv = a + (int) (Math.random() * b);
+        return cvv;
     }
 }

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class User implements Serializable {
-    public User(String name, String surname, String dob, boolean gender, String email, String pwd) {
+    public User(String name, String surname, Date dob, boolean gender, String email, String pwd) {
         this.name = name;
         this.surname = surname;
         this.dob = dob;
@@ -15,10 +16,13 @@ public class User implements Serializable {
         this.pwd = pwd;
     }
 
+
+
+
     Scanner console = new Scanner(System.in);
     private String name;
     private String surname;
-    private String dob;
+    private Date dob;
     private boolean gender;
     private String email;
     private String pwd;
@@ -33,7 +37,7 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -55,7 +59,7 @@ public class User implements Serializable {
         return surname;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
@@ -105,15 +109,4 @@ public class User implements Serializable {
                 ", cards=" + cards +
                 '}';
     }
-
-
-   // public void checkEmail(){
-   //     System.out.println("Put your email and password");
-   //     String eml = console.nextLine();
-    //    String password = console.nextLine();
-    //    if(eml.equals(email) && password.equals(pwd)){
-    //        System.out.println("Wrong password or account don't exist");
-   //     }
-   // }
-
 }

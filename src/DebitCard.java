@@ -2,11 +2,11 @@ import java.util.Date;
 
 public class DebitCard {
     private double avialiableBalance;
-    private long CardNumber;
-    private String expireDate;
+    private String CardNumber;
+    private Date expireDate;
     private int cvv;
 
-    public DebitCard(double avialiableBalance, long cardNumber, String expireDate, int cvv) {
+    public DebitCard(double avialiableBalance, String cardNumber, Date expireDate, int cvv) {
         this.avialiableBalance = avialiableBalance;
         CardNumber = cardNumber;
         this.expireDate = expireDate;
@@ -17,11 +17,11 @@ public class DebitCard {
         return avialiableBalance;
     }
 
-    public long getCardNumber() {
+    public String getCardNumber() {
         return CardNumber;
     }
 
-    public String getExpireDate() {
+    public Date getExpireDate() {
         return expireDate;
     }
 
@@ -33,11 +33,11 @@ public class DebitCard {
         this.avialiableBalance = avialiableBalance;
     }
 
-    public void setCardNumber(long cardNumber) {
+    public void setCardNumber(String cardNumber) {
         CardNumber = cardNumber;
     }
 
-    public void setExpireDate(String expireDate) {
+    public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
     }
 

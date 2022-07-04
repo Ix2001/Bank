@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
+
     List<User> users = new ArrayList<>();
 
     User logedInUser = null;
@@ -52,9 +53,8 @@ public class Bank {
             }
         } catch (IOException e) {
             System.out.println("Cannot write to file");
+
         }
-
-
     }
     public void deserializeUsers()  {
         FileInputStream fis = null;
