@@ -1,12 +1,21 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Bank {
 
-    List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
-    User logedInUser = null;
+    private User logedInUser = null;
+
+
+
+    public User getLogedInUser() {
+        return logedInUser;
+
+    }
+
     Cashier cs = new Cashier(this);
     public void start(){
         deserializeUsers();
@@ -52,8 +61,8 @@ public class Bank {
                 System.out.println("Cannot create file on disk");;
             }
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Cannot write to file");
-
         }
     }
     public void deserializeUsers()  {
@@ -69,10 +78,15 @@ public class Bank {
             try {
                 file.createNewFile();
             } catch (IOException ex) {
-                System.out.println("Cannot read file on disk");;
+                System.out.println("Cannot read file on disk");
             }
         } catch (IOException e) {
-            System.out.println("Cannot read the file");;
+            System.out.println("Cannot read the file");
+            User admin = new User("Admin","Admin",new Date(),true,"admin@admin.com","admin");
+            users.add(admin);
+            serializeUsers(users);
+
+
         } catch (ClassNotFoundException e) {
             System.out.println("Error");
         }

@@ -4,10 +4,13 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Cashier {
+    Scanner scanner = new Scanner(System.in);
 
     public Bank bank;
+
 
     BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 
@@ -23,7 +26,8 @@ public class Cashier {
         System.out.println("0. Exit");
         int choice = 0;
         try {
-            choice = console.read();
+
+            choice = Integer.parseInt(console.readLine());
         } catch (IOException e) {
             System.out.println("Cannot read the data");
         }
@@ -51,10 +55,11 @@ public class Cashier {
             System.out.println("Cannot show login");
         }
 
-
         boolean isLogedIn = bank.doLogin(email, pwd);
+
         if(!isLogedIn){
             System.out.println("Incorrect email or password");
+            showStartMenu();
         }else {
             showCashierMenu();
         }
@@ -67,7 +72,6 @@ public class Cashier {
         String name = null;
         String surname = null;
         String date = null;
-
         try {
             System.out.println("Please tell us your email");
             email = console.readLine();
@@ -84,66 +88,94 @@ public class Cashier {
             System.out.println("Cannot read the data");
         }
 
-        System.out.println("Please choose your gender");
+        System.out.println("Please choose your gender male or female");
         System.out.println("1. Male");
         System.out.println("2. Female");
-        int choice2 = 0;
-        try {
-            choice2 = console.read();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+        Scanner scanner = new Scanner(System.in);
         boolean gender = true;
+        int choice2 = scanner.nextInt();
         if(choice2 == 1){
             gender = true;
-        }
-        else if(choice2 ==2 ){
+        }else if(choice2 == 2){
             gender = false;
         }else {
             System.out.println("Wrong number");
         }
+
+//        int choice2;
+//        try {
+//            choice2 = console.read();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        boolean gender = true;
+//        if(choice2 == 1){
+//            gender = true;
+//        }
+//        else if(choice2 ==2 ){
+//            gender = false;
+//        }else {
+//            System.out.println("Wrong number");
+//        }
         Date dob = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         User user = new User(name, surname, dob , gender, email, pwd);
         bank.doRegister(user);
-
+        showCashierMenu();
     }
     public void showCashierMenu() {
         System.out.println("1. Show my info");
         System.out.println("2. Add loan");
         System.out.println("3. Add debit card");
         System.out.println("0.  Exit");
-        int choice = 0;
-        try {
-            choice = console.read();
-            if(choice == 2){
-                this.readGetLoan();
-            }else if(choice == 3){
+        int choice = scanner.nextInt();
+        if(choice == 2){
+            this.readGetLoan();
+            showCashierMenu();
+        }else if(choice == 3){
+            try {
                 this.readCardAdding();
+                showCashierMenu();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            System.out.println("Cannot read the data");
+        } else if(choice == 1){
+            bank.getLogedInUser().toString();
+            System.out.println("Please push 1 to get menu");
+            int choice1 = scanner.nextInt();
+            if(choice1 == 1){
+                showCashierMenu();
+            }
+        }else if(choice == 0){
+            System.exit(0);
         }
+//        try {
+//            Integer.parseInt(console.readLine());
+//            if(choice == 2){
+//                this.readGetLoan();
+//            }else if(choice == 3){
+//                this.readCardAdding();
+//            }
+//        } catch (IOException e) {
+//            System.out.println("Cannot read the data");
+//        }
 
 
 
     }
-    public void readCardAdding() {
+    public void readCardAdding() throws IOException {
         String cardNumber = generateCardNumber();
         double avialiableBalance = 0;
         String expireDate = null;
-        //int cvv= 0;
-        try {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        Scanner console = new Scanner(System.in);
+
             System.out.println("Please tell us avialiable balance of your card");
-            avialiableBalance = console.read();
+            avialiableBalance = console.nextDouble();
             System.out.println("Please tell us expire date of your card in format MM/YYYY");
-            expireDate = console.readLine();
+            expireDate = bufferedReader.readLine();
             //System.out.println("Write your cvv/cvc");
             //cvv = console.read();
-        } catch (IOException e) {
-            System.out.println("Cannot read the data");
-        }
-
-
         Date expDate = null;
         try {
             expDate = new SimpleDateFormat("MM/yyyy").parse(expireDate);
@@ -155,23 +187,22 @@ public class Cashier {
         bank.writeCardAdding(debitCard);
     }
     public void readGetLoan(){
+        Scanner console = new Scanner(System.in);
         System.out.println("Please tell us application date");
         String application = null;
         double interest = 0;
         int month = 0;
         double monthlyPayments = 0;
-        try {
-            application = console.readLine();
+
+            application = console.nextLine();
             System.out.println("Please tell us interest rate");
-            interest = console.read();
+            interest = console.nextDouble();
             System.out.println("Please tell us desire loan repayment period");
-            month = console.read();
-            monthlyPayments = console.read();
+            month = console.nextInt();
+            monthlyPayments = console.nextDouble();
             System.out.println("Please tell us desire monthly Payments");
-            monthlyPayments = console.read();
-        } catch (IOException e) {
-            System.out.println("Cannot read the data");;
-        }
+            monthlyPayments = console.nextDouble();;
+
 
         Date applicationDate = null;
         try {
@@ -181,6 +212,7 @@ public class Cashier {
         }
         Loan loan = new Loan(applicationDate,interest,month,monthlyPayments);
         bank.writeGetLoan(loan);
+        System.out.println("Your loan was approved");
     }
     public String generateCardNumber(){
         long a = 1000000000000000L; // Начальное значение диапазона - "от"
@@ -191,7 +223,7 @@ public class Cashier {
         return cardNumber;
     }
     public int generateCVV(){
-        int a = 111; // Начальное значение диапазона - "от"
+        int a = 100; // Начальное значение диапазона - "от"
         int b = 999; // Конечное значение диапазона - "до"
 
         int cvv = a + (int) (Math.random() * b);

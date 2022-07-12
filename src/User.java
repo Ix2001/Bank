@@ -4,9 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class User implements Serializable {
+
+
     public User(String name, String surname, Date dob, boolean gender, String email, String pwd) {
         this.name = name;
         this.surname = surname;
@@ -19,7 +21,7 @@ public class User implements Serializable {
 
 
 
-    Scanner console = new Scanner(System.in);
+
     private String name;
     private String surname;
     private Date dob;
