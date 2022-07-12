@@ -1,12 +1,13 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class Loan extends Bank {
+public class Loan extends Bank implements Serializable {
     private Date application;
-    private double interest;
+    private int interest;
     private int month;
-    private double monthlyPayments;
+    private int monthlyPayments;
 
-    public Loan(Date application, double interest, int month, double monthlyPayments) {
+    public Loan(Date application, int interest, int month, int monthlyPayments) {
         this.application = application;
         this.interest = interest;
         this.month = month;
@@ -18,7 +19,7 @@ public class Loan extends Bank {
         return application;
     }
 
-    public double getInterest() {
+    public int getInterest() {
         return interest;
     }
 
@@ -26,7 +27,7 @@ public class Loan extends Bank {
         return month;
     }
 
-    public double getMonthlyPayments() {
+    public int getMonthlyPayments() {
         return monthlyPayments;
     }
 
@@ -34,7 +35,7 @@ public class Loan extends Bank {
         this.application = application;
     }
 
-    public void setInterest(double interest) {
+    public void setInterest(int interest) {
         this.interest = interest;
     }
 
@@ -42,7 +43,7 @@ public class Loan extends Bank {
         this.month = month;
     }
 
-    public void setMonthlyPayments(double monthlyPayments) {
+    public void setMonthlyPayments(int monthlyPayments) {
         this.monthlyPayments = monthlyPayments;
     }
     public String toString(){

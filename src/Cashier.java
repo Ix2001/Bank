@@ -26,7 +26,6 @@ public class Cashier {
         System.out.println("0. Exit");
         int choice = 0;
         try {
-
             choice = Integer.parseInt(console.readLine());
         } catch (IOException e) {
             System.out.println("Cannot read the data");
@@ -60,9 +59,8 @@ public class Cashier {
         if(!isLogedIn){
             System.out.println("Incorrect email or password");
             showStartMenu();
-        }else {
-            showCashierMenu();
         }
+        showCashierMenu();
     }
 
 
@@ -83,7 +81,7 @@ public class Cashier {
             surname = console.readLine();
             System.out.println("Please tell us your date of birth by dd/MM/yyyy format");
             date =  console.readLine();
-
+            bank.getLogedInUser();
         } catch (IOException e) {
             System.out.println("Cannot read the data");
         }
@@ -127,6 +125,9 @@ public class Cashier {
         System.out.println("1. Show my info");
         System.out.println("2. Add loan");
         System.out.println("3. Add debit card");
+        if(bank.getLogedInUser().getEmail().equals(bank.getAdmin().getEmail()) || bank.getLogedInUser().getPwd().equals(bank.getAdmin().getPwd())){
+            System.out.println("4. Show statistic");
+        }
         System.out.println("0.  Exit");
         int choice = scanner.nextInt();
         if(choice == 2){
@@ -140,7 +141,7 @@ public class Cashier {
                 throw new RuntimeException(e);
             }
         } else if(choice == 1){
-            bank.getLogedInUser().toString();
+            bank.showMyInfo();
             System.out.println("Please push 1 to get menu");
             int choice1 = scanner.nextInt();
             if(choice1 == 1){
@@ -188,22 +189,22 @@ public class Cashier {
     }
     public void readGetLoan(){
         Scanner console = new Scanner(System.in);
-        System.out.println("Please tell us application date");
-        String application = null;
-        double interest = 0;
-        int month = 0;
-        double monthlyPayments = 0;
-
-            application = console.nextLine();
+        System.out.println("Please tell us application date dd/MM/yyyy");
+        String application = console.nextLine();
+        System.out.println("Please tell us interest rate");
+        int interest = console.nextInt();
+        System.out.println("Please tell us desire loan repayment period");
+        int month = console.nextInt();
+        System.out.println("Please tell us desire monthly Payments");
+        int monthlyPayments = console.nextInt();
+            /*application = console.nextLine();
             System.out.println("Please tell us interest rate");
             interest = console.nextDouble();
             System.out.println("Please tell us desire loan repayment period");
             month = console.nextInt();
             monthlyPayments = console.nextDouble();
             System.out.println("Please tell us desire monthly Payments");
-            monthlyPayments = console.nextDouble();;
-
-
+            monthlyPayments = console.nextDouble();;*/
         Date applicationDate = null;
         try {
             applicationDate = new SimpleDateFormat("dd/MM/yyyy").parse(application);
@@ -229,4 +230,5 @@ public class Cashier {
         int cvv = a + (int) (Math.random() * b);
         return cvv;
     }
+
 }

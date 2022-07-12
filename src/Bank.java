@@ -5,15 +5,22 @@ import java.util.List;
 
 public class Bank {
 
+
+    public User getAdmin() {
+        return admin;
+    }
+
     private List<User> users = new ArrayList<>();
 
     private User logedInUser = null;
-
-
+    User admin = new User("admin","admin",new Date(),true,"admin","admin");
+    public void admin(){
+        users.add(admin);
+        serializeUsers(users);
+    }
 
     public User getLogedInUser() {
-        return logedInUser;
-
+        return logedInUser = null;
     }
 
     Cashier cs = new Cashier(this);
@@ -35,15 +42,18 @@ public class Bank {
     }
     public void writeCardAdding(DebitCard debitCard){
         logedInUser.getCards().add(debitCard);
+        users.add(logedInUser);
         serializeUsers(users);
     }
     public void writeGetLoan(Loan loan){
         logedInUser.getLoans().add(loan);
+        users.add(logedInUser);
         serializeUsers(users);
     }
 
     public void doRegister(User user){
         users.add(user);
+        logedInUser = user;
         serializeUsers(users);
     }
     public void serializeUsers(List<User> users)  {
@@ -90,5 +100,24 @@ public class Bank {
         } catch (ClassNotFoundException e) {
             System.out.println("Error");
         }
+
+    }
+    public void showMyInfo(){
+                /*""name='" + this.getLogedInUser().getName() + '\'' +
+                ", surname='" + this.getLogedInUser().getSurname() + '\'' +
+                ", dob=" + this.getLogedInUser().getDob()  +
+
+                ", email='" + this.getLogedInUser().getEmail()  + '\'' +
+                ", pwd='" + this.getLogedInUser().getPwd()  + '\'' +
+                ", loans=" + this.getLogedInUser().getLoans() +
+                ", cards=" + this.getLogedInUser().getCards() +
+                '}'"*/
+        System.out.println("name =" + this.getLogedInUser().getName());
+        System.out.println("surname" + this.getLogedInUser().getSurname());
+        System.out.println("date if birth" + this.getLogedInUser().getDob());
+        System.out.println("email" + this.getLogedInUser().getEmail());
+        System.out.println("password" + this.getLogedInUser().getPwd());
+        System.out.println("loans" + this.getLogedInUser().getLoans());
+        System.out.println("cards" + this.getLogedInUser().getCards());
     }
 }

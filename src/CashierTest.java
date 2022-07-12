@@ -3,15 +3,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CashierTest {
-    Cashier cashier = new Cashier(null);
-
-
+    Bank bank = new Bank();
+    Cashier cashier = new Cashier(bank);
     @Test
-    void generateCardNumber() {
-        
+    void testGenerateCardNumber() {
+
+        cashier.generateCardNumber();
+        assertEquals("1234567891234567",cashier.generateCardNumber());
     }
 
     @Test
-    void generateCVV() {
+    void testGenerateCVV() {
+        assertEquals(100,cashier.generateCVV());
     }
 }
