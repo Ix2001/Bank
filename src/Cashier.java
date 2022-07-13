@@ -4,7 +4,9 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Cashier {
     Scanner scanner = new Scanner(System.in);
@@ -81,7 +83,6 @@ public class Cashier {
             surname = console.readLine();
             System.out.println("Please tell us your date of birth by dd/MM/yyyy format");
             date =  console.readLine();
-            bank.getLogedInUser();
         } catch (IOException e) {
             System.out.println("Cannot read the data");
         }
@@ -100,22 +101,6 @@ public class Cashier {
         }else {
             System.out.println("Wrong number");
         }
-
-//        int choice2;
-//        try {
-//            choice2 = console.read();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        boolean gender = true;
-//        if(choice2 == 1){
-//            gender = true;
-//        }
-//        else if(choice2 ==2 ){
-//            gender = false;
-//        }else {
-//            System.out.println("Wrong number");
-//        }
         Date dob = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         User user = new User(name, surname, dob , gender, email, pwd);
         bank.doRegister(user);
@@ -128,7 +113,8 @@ public class Cashier {
         if(bank.getLogedInUser().getEmail().equals(bank.getAdmin().getEmail()) || bank.getLogedInUser().getPwd().equals(bank.getAdmin().getPwd())){
             System.out.println("4. Show statistic");
         }
-        System.out.println("0.  Exit");
+        System.out.println("0. Exit");
+        System.out.println("9. back to authorization menu");
         int choice = scanner.nextInt();
         if(choice == 2){
             this.readGetLoan();
@@ -141,7 +127,7 @@ public class Cashier {
                 throw new RuntimeException(e);
             }
         } else if(choice == 1){
-            bank.showMyInfo();
+            this.showMyInfo();
             System.out.println("Please push 1 to get menu");
             int choice1 = scanner.nextInt();
             if(choice1 == 1){
@@ -150,20 +136,34 @@ public class Cashier {
         }else if(choice == 0){
             System.exit(0);
         }
-//        try {
-//            Integer.parseInt(console.readLine());
-//            if(choice == 2){
-//                this.readGetLoan();
-//            }else if(choice == 3){
-//                this.readCardAdding();
-//            }
-//        } catch (IOException e) {
-//            System.out.println("Cannot read the data");
-//        }
-
-
-
+        else if(choice == 4){
+            adminMenu();
+        }
+        else if(choice == 9){
+            showStartMenu();
+        }
     }
+    public void adminMenu(){
+        System.out.println("Please choose the option");
+        System.out.println("1. Show all register user");
+        System.out.println("2. Sort users by loan");
+        System.out.println("3. Sort and group users by card");
+        System.out.println("0. Back to menu");
+        int choicesort = scanner.nextInt();
+        if(choicesort ==3){
+            this.showStatitsicGroupingCard();
+            adminMenu();
+        } else if (choicesort == 2) {
+            this.showStatitsicLoans();
+            adminMenu();
+        } else if (choicesort == 1) {
+            this.showAllusers();
+            adminMenu();
+        } else if (choicesort == 0) {
+            showCashierMenu();
+        }
+    }
+
     public void readCardAdding() throws IOException {
         String cardNumber = generateCardNumber();
         double avialiableBalance = 0;
@@ -175,8 +175,6 @@ public class Cashier {
             avialiableBalance = console.nextDouble();
             System.out.println("Please tell us expire date of your card in format MM/YYYY");
             expireDate = bufferedReader.readLine();
-            //System.out.println("Write your cvv/cvc");
-            //cvv = console.read();
         Date expDate = null;
         try {
             expDate = new SimpleDateFormat("MM/yyyy").parse(expireDate);
@@ -197,14 +195,6 @@ public class Cashier {
         int month = console.nextInt();
         System.out.println("Please tell us desire monthly Payments");
         int monthlyPayments = console.nextInt();
-            /*application = console.nextLine();
-            System.out.println("Please tell us interest rate");
-            interest = console.nextDouble();
-            System.out.println("Please tell us desire loan repayment period");
-            month = console.nextInt();
-            monthlyPayments = console.nextDouble();
-            System.out.println("Please tell us desire monthly Payments");
-            monthlyPayments = console.nextDouble();;*/
         Date applicationDate = null;
         try {
             applicationDate = new SimpleDateFormat("dd/MM/yyyy").parse(application);
@@ -216,8 +206,8 @@ public class Cashier {
         System.out.println("Your loan was approved");
     }
     public String generateCardNumber(){
-        long a = 1000000000000000L; // Начальное значение диапазона - "от"
-        long b = 9999999999999999L; // Конечное значение диапазона - "до"
+        long a = 1000000000000000L;
+        long b = 8999999999999999L;
 
         long cardNumber0 = a + (long) (Math.random() * b);
         String cardNumber = Long.toString(cardNumber0);
@@ -225,10 +215,32 @@ public class Cashier {
     }
     public int generateCVV(){
         int a = 100; // Начальное значение диапазона - "от"
-        int b = 999; // Конечное значение диапазона - "до"
+        int b = 899; // Конечное значение диапазона - "до"
 
         int cvv = a + (int) (Math.random() * b);
         return cvv;
     }
+    public void showMyInfo(){
+        System.out.println(bank.getLogedInUser());
+    }
+    public void showStatitsicLoans(){
+        List<User> sorted =  bank.getUsers().stream()
+                .sorted((user, user2) -> Integer.compare(user2.getLoans().size(), user.getLoans().size()))
+                .collect(Collectors.toList());
+        sorted.forEach(System.out::println);
+
+    }
+    public void showStatitsicGroupingCard(){
+        bank.getUsers().stream()
+                .collect(Collectors.groupingBy(user -> user.getCards().size()))
+                .forEach((cards,users)-> System.out.println(cards + ": " + users));
+
+    }
+    public void showAllusers(){
+        for(User user: bank.getUsers()){
+            System.out.println(user.toString());
+        }
+    }
+
 
 }

@@ -45,12 +45,14 @@ public class DebitCard implements Serializable {
     public void setCvv(int cvv) {
         this.cvv = cvv;
     }
-    public String toString(){
-        System.out.println("Card number is: " + CardNumber);
-        System.out.println("Avialiable balance is: " + avialiableBalance);
-        System.out.println("Expire date is: " + expireDate);
-        System.out.println("Cvv is: " + cvv);
-        return toString();
+
+    @Override
+    public String toString() {
+        return "DebitCard{" +
+                "avialiableBalance=" + avialiableBalance +
+                ", CardNumber='" + CardNumber + '\'' +
+                ", expireDate=" + expireDate +
+                ", cvv=" + cvv +
+                '}';
     }
 }
-

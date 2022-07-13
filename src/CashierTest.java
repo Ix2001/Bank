@@ -8,12 +8,11 @@ class CashierTest {
     @Test
     void testGenerateCardNumber() {
 
-        cashier.generateCardNumber();
-        assertEquals("1234567891234567",cashier.generateCardNumber());
+        assertEquals(16,cashier.generateCardNumber().length());
     }
 
     @Test
     void testGenerateCVV() {
-        assertEquals(100,cashier.generateCVV());
+        assertEquals(3,String.valueOf(cashier.generateCVV()).length());
     }
 }

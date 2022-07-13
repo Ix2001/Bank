@@ -1,10 +1,11 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bank {
-
+    public List<User> getUsers() {
+        return users;
+    }
 
     public User getAdmin() {
         return admin;
@@ -20,7 +21,7 @@ public class Bank {
     }
 
     public User getLogedInUser() {
-        return logedInUser = null;
+        return logedInUser;
     }
 
     Cashier cs = new Cashier(this);
@@ -63,6 +64,7 @@ public class Bank {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(users);
             oos.close();
+
         } catch (FileNotFoundException e) {
             File file = new File("Users.data");
             try {
@@ -71,7 +73,6 @@ public class Bank {
                 System.out.println("Cannot create file on disk");;
             }
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("Cannot write to file");
         }
     }
@@ -83,6 +84,7 @@ public class Bank {
             users = (ArrayList) ois.readObject();
             ois.close();
             fis.close();
+            admin();
         } catch (FileNotFoundException e) {
             File file = new File("Users.data");
             try {
@@ -91,33 +93,11 @@ public class Bank {
                 System.out.println("Cannot read file on disk");
             }
         } catch (IOException e) {
-            System.out.println("Cannot read the file");
-            User admin = new User("Admin","Admin",new Date(),true,"admin@admin.com","admin");
             users.add(admin);
             serializeUsers(users);
-
-
         } catch (ClassNotFoundException e) {
             System.out.println("Error");
         }
 
-    }
-    public void showMyInfo(){
-                /*""name='" + this.getLogedInUser().getName() + '\'' +
-                ", surname='" + this.getLogedInUser().getSurname() + '\'' +
-                ", dob=" + this.getLogedInUser().getDob()  +
-
-                ", email='" + this.getLogedInUser().getEmail()  + '\'' +
-                ", pwd='" + this.getLogedInUser().getPwd()  + '\'' +
-                ", loans=" + this.getLogedInUser().getLoans() +
-                ", cards=" + this.getLogedInUser().getCards() +
-                '}'"*/
-        System.out.println("name =" + this.getLogedInUser().getName());
-        System.out.println("surname" + this.getLogedInUser().getSurname());
-        System.out.println("date if birth" + this.getLogedInUser().getDob());
-        System.out.println("email" + this.getLogedInUser().getEmail());
-        System.out.println("password" + this.getLogedInUser().getPwd());
-        System.out.println("loans" + this.getLogedInUser().getLoans());
-        System.out.println("cards" + this.getLogedInUser().getCards());
     }
 }

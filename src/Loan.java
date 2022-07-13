@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.Date;
 
-public class Loan extends Bank implements Serializable {
+public class Loan implements Serializable {
     private Date application;
     private int interest;
     private int month;
@@ -46,10 +46,14 @@ public class Loan extends Bank implements Serializable {
     public void setMonthlyPayments(int monthlyPayments) {
         this.monthlyPayments = monthlyPayments;
     }
-    public String toString(){
-        System.out.println("Credite rate is: " + interest);
-        System.out.println("Loan terms: " + month);
-        System.out.println("Monthly Payments: " + monthlyPayments);
-        return toString();
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "application=" + application +
+                ", interest=" + interest +
+                ", month=" + month +
+                ", monthlyPayments=" + monthlyPayments +
+                '}';
     }
 }

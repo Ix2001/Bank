@@ -28,8 +28,8 @@ public class User implements Serializable {
     private boolean gender;
     private String email;
     private String pwd;
-    List<Loan> loan = new ArrayList<>();
-    List<DebitCard> cards = new ArrayList<>();
+    private List<Loan> loan = new ArrayList<>();
+    private List<DebitCard> cards = new ArrayList<>();
 
     public void setName(String name) {
         this.name = name;
